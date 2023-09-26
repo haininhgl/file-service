@@ -1,10 +1,10 @@
 package com.miraway.mss.config;
 
-import com.miraway.mss.security.*;
-import com.miraway.mss.security.jwt.*;
+import com.miraway.mss.security.AuthoritiesConstants;
+import com.miraway.mss.security.jwt.JWTConfigurer;
+import com.miraway.mss.security.jwt.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;

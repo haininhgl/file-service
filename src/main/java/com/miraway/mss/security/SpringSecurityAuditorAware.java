@@ -1,6 +1,6 @@
 package com.miraway.mss.security;
 
-import com.miraway.mss.config.Constants;
+import com.miraway.mss.constants.Constants;
 import java.util.Optional;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
