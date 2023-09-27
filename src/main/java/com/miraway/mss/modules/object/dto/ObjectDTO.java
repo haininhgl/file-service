@@ -1,7 +1,7 @@
 package com.miraway.mss.modules.object.dto;
 
+import com.miraway.mss.modules.object.enumaration.ObjectCategory;
 import com.miraway.mss.modules.object.enumaration.ObjectType;
-import com.miraway.mss.modules.object.enumaration.Type;
 import java.time.Instant;
 
 
@@ -21,9 +21,9 @@ public class ObjectDTO {
 
     private String thumbnailPath;
 
-    private Type type;
-
     private ObjectType objectType;
+
+    private ObjectCategory objectCategory;
 
     private String objectFormat;
 
@@ -37,7 +37,7 @@ public class ObjectDTO {
     }
 
     public ObjectDTO(String id, String name, String physicalName, String organizationId, String parentId,
-                     String path, String thumbnailPath, Type type, ObjectType objectType, String objectFormat,
+                     String path, String thumbnailPath, ObjectType objectType, ObjectCategory objectCategory, String objectFormat,
                      Long size, boolean isDeleted, Instant lastModifiedDate) {
         this.id = id;
         this.name = name;
@@ -46,8 +46,8 @@ public class ObjectDTO {
         this.parentId = parentId;
         this.path = path;
         this.thumbnailPath = thumbnailPath;
-        this.type = type;
         this.objectType = objectType;
+        this.objectCategory = objectCategory;
         this.objectFormat = objectFormat;
         this.size = size;
         this.isDeleted = isDeleted;
@@ -110,20 +110,20 @@ public class ObjectDTO {
         this.thumbnailPath = thumbnailPath;
     }
 
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
-
     public ObjectType getObjectType() {
         return objectType;
     }
 
     public void setObjectType(ObjectType objectType) {
         this.objectType = objectType;
+    }
+
+    public ObjectCategory getObjectCategory() {
+        return objectCategory;
+    }
+
+    public void setObjectCategory(ObjectCategory objectCategory) {
+        this.objectCategory = objectCategory;
     }
 
     public String getObjectFormat() {
