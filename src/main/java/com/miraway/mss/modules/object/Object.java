@@ -1,30 +1,34 @@
-package com.miraway.mss.entity;
+package com.miraway.mss.modules.object;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.time.Instant;
 
 import static com.miraway.mss.constants.Constants.STRING_MAX_LENGTH;
-import static com.miraway.mss.constants.Constants.STRING_MIN_LENGTH;
 
 public class Object {
 
     @Id
     private String id;
 
-    @Size(max = STRING_MAX_LENGTH, min = STRING_MIN_LENGTH)
+    @Size(max = STRING_MAX_LENGTH)
+    @NotEmpty
     @Indexed(unique = true)
     private String name;
 
     @Size(max = STRING_MAX_LENGTH)
+    @NotEmpty
     private String physicalName;
 
     @Size(max = STRING_MAX_LENGTH)
+    @NotEmpty
     private String organizationId;
 
     @Size(max = STRING_MAX_LENGTH)
+    @NotEmpty
     private String parentId;
 
     @Size(max = STRING_MAX_LENGTH)
@@ -37,7 +41,6 @@ public class Object {
 
     private ObjectType objectType;
 
-    @Size(max = STRING_MAX_LENGTH)
     private String objectFormat;
 
     @Size(max = STRING_MAX_LENGTH)
@@ -45,7 +48,6 @@ public class Object {
 
     private boolean isDelete;
 
-    @Size(max = STRING_MAX_LENGTH)
     private Instant lastModifiedDate;
 
     public Object() {

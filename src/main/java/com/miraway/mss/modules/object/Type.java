@@ -1,4 +1,4 @@
-package com.miraway.mss.entity;
+package com.miraway.mss.modules.object;
 
 public enum Type {
 
