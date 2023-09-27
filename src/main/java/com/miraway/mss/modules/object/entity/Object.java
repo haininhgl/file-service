@@ -6,6 +6,7 @@ import com.miraway.mss.modules.object.enumaration.ObjectType;
 import com.miraway.mss.modules.object.enumaration.Type;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -13,6 +14,7 @@ import java.time.Instant;
 
 import static com.miraway.mss.constants.Constants.STRING_MAX_LENGTH;
 
+@Document(collection = "objects")
 public class Object extends AbstractAuditingEntity<String> {
     @Id
     private String id;
