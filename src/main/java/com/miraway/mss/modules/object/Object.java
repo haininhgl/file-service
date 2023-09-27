@@ -1,9 +1,10 @@
 package com.miraway.mss.modules.object;
 
+import com.miraway.mss.modules.common.validator.DatabaseIdConstraint;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.Instant;
 
@@ -15,38 +16,42 @@ public class Object {
     private String id;
 
     @Size(max = STRING_MAX_LENGTH)
-    @NotEmpty
+    @NotBlank
     @Indexed(unique = true)
     private String name;
 
     @Size(max = STRING_MAX_LENGTH)
-    @NotEmpty
+    @NotBlank
     private String physicalName;
 
     @Size(max = STRING_MAX_LENGTH)
-    @NotEmpty
+    @NotBlank
+    @DatabaseIdConstraint
     private String organizationId;
 
     @Size(max = STRING_MAX_LENGTH)
-    @NotEmpty
+    @NotBlank
     private String parentId;
 
     @Size(max = STRING_MAX_LENGTH)
+    @NotBlank
     private String path;
 
     @Size(max = STRING_MAX_LENGTH)
+    @NotBlank
     private String thumbnailPath;
 
     private Type type;
 
     private ObjectType objectType;
 
+    @NotBlank
     private String objectFormat;
 
     @Size(max = STRING_MAX_LENGTH)
     private Long size;
 
-    private boolean isDelete;
+    private boolean isDeleted = false;
 
     private Instant lastModifiedDate;
 
@@ -55,7 +60,7 @@ public class Object {
 
     public Object(String id, String name, String physicalName, String organizationId, String parentId,
                   String path, String thumbnailPath, Type type, ObjectType objectType, String objectFormat,
-                  Long size, boolean isDelete, Instant lastModifiedDate) {
+                  Long size, boolean isDeleted, Instant lastModifiedDate) {
         this.id = id;
         this.name = name;
         this.physicalName = physicalName;
@@ -67,7 +72,7 @@ public class Object {
         this.objectType = objectType;
         this.objectFormat = objectFormat;
         this.size = size;
-        this.isDelete = isDelete;
+        this.isDeleted = isDeleted;
         this.lastModifiedDate = lastModifiedDate;
     }
 
@@ -159,12 +164,12 @@ public class Object {
         this.size = size;
     }
 
-    public boolean isDelete() {
-        return isDelete;
+    public boolean isDeleted() {
+        return isDeleted;
     }
 
-    public void setDelete(boolean delete) {
-        isDelete = delete;
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 
     public Instant getLastModifiedDate() {
