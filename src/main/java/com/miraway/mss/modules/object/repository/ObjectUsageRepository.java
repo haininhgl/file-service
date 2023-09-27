@@ -1,6 +1,6 @@
-package com.miraway.mss.modules.repository;
+package com.miraway.mss.modules.object.repository;
 
-import com.miraway.mss.modules.object.ObjectUsage;
+import com.miraway.mss.modules.object.entity.ObjectUsage;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

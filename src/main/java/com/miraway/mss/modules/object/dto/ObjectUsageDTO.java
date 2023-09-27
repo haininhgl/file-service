@@ -1,35 +1,26 @@
-package com.miraway.mss.modules.object;
+package com.miraway.mss.modules.object.dto;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
+import com.miraway.mss.modules.object.entity.Object;
 
-import javax.validation.constraints.NotBlank;
+public class ObjectUsageDTO {
 
-public class ObjectUsage {
-
-    @Id
     private String id;
 
-    @DBRef
-    @NotBlank
     private Object object;
 
     private boolean isDeletable = false;
 
-    @NotBlank
     private String clientService;
 
-    @NotBlank
     private String clientId;
 
-    @NotBlank
     private String clientName;
 
-    public ObjectUsage() {
+    public ObjectUsageDTO() {
     }
 
-    public ObjectUsage(String id, Object object, boolean isDeletable,
-                       String clientService, String clientId, String clientName) {
+    public ObjectUsageDTO(String id, Object object, boolean isDeletable,
+                          String clientService, String clientId, String clientName) {
         this.id = id;
         this.object = object;
         this.isDeletable = isDeletable;

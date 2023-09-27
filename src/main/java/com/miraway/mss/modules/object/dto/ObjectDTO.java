@@ -1,66 +1,44 @@
-package com.miraway.mss.modules.object;
+package com.miraway.mss.modules.object.dto;
 
-import com.miraway.mss.modules.common.validator.DatabaseIdConstraint;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import com.miraway.mss.modules.object.enumaration.ObjectType;
+import com.miraway.mss.modules.object.enumaration.Type;
 import java.time.Instant;
 
-import static com.miraway.mss.constants.Constants.STRING_MAX_LENGTH;
 
-public class Object {
+public class ObjectDTO {
 
-    @Id
     private String id;
 
-    @Size(max = STRING_MAX_LENGTH)
-    @NotBlank
-    @Indexed(unique = true)
     private String name;
 
-    @Size(max = STRING_MAX_LENGTH)
-    @NotBlank
     private String physicalName;
 
-    @Size(max = STRING_MAX_LENGTH)
-    @NotBlank
-    @DatabaseIdConstraint
     private String organizationId;
 
-    @Size(max = STRING_MAX_LENGTH)
-    @NotBlank
     private String parentId;
 
-    @Size(max = STRING_MAX_LENGTH)
-    @NotBlank
     private String path;
 
-    @Size(max = STRING_MAX_LENGTH)
-    @NotBlank
     private String thumbnailPath;
 
     private Type type;
 
     private ObjectType objectType;
 
-    @NotBlank
     private String objectFormat;
 
-    @Size(max = STRING_MAX_LENGTH)
     private Long size;
 
     private boolean isDeleted = false;
 
     private Instant lastModifiedDate;
 
-    public Object() {
+    public ObjectDTO() {
     }
 
-    public Object(String id, String name, String physicalName, String organizationId, String parentId,
-                  String path, String thumbnailPath, Type type, ObjectType objectType, String objectFormat,
-                  Long size, boolean isDeleted, Instant lastModifiedDate) {
+    public ObjectDTO(String id, String name, String physicalName, String organizationId, String parentId,
+                     String path, String thumbnailPath, Type type, ObjectType objectType, String objectFormat,
+                     Long size, boolean isDeleted, Instant lastModifiedDate) {
         this.id = id;
         this.name = name;
         this.physicalName = physicalName;
