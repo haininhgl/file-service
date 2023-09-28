@@ -2,16 +2,15 @@ package com.miraway.mss.modules.object.dto;
 
 import com.miraway.mss.modules.object.enumaration.ObjectCategory;
 import com.miraway.mss.modules.object.enumaration.ObjectType;
+
 import java.time.Instant;
 
-
 public class ObjectDTO {
-
     private String id;
 
     private String name;
 
-    private String physicalName;
+    private String displayName;
 
     private String organizationId;
 
@@ -21,37 +20,23 @@ public class ObjectDTO {
 
     private String thumbnailPath;
 
-    private ObjectType objectType;
+    private ObjectType type = ObjectType.FOLDER;
 
-    private ObjectCategory objectCategory;
+    private ObjectCategory category;
 
-    private String objectFormat;
+    private String extension = "";
 
-    private Long size;
+    private String mimeType = "";
+
+    private Long size = 0L;
 
     private boolean isDeleted = false;
+
+    private String lastModifiedBy;
 
     private Instant lastModifiedDate;
 
     public ObjectDTO() {
-    }
-
-    public ObjectDTO(String id, String name, String physicalName, String organizationId, String parentId,
-                     String path, String thumbnailPath, ObjectType objectType, ObjectCategory objectCategory, String objectFormat,
-                     Long size, boolean isDeleted, Instant lastModifiedDate) {
-        this.id = id;
-        this.name = name;
-        this.physicalName = physicalName;
-        this.organizationId = organizationId;
-        this.parentId = parentId;
-        this.path = path;
-        this.thumbnailPath = thumbnailPath;
-        this.objectType = objectType;
-        this.objectCategory = objectCategory;
-        this.objectFormat = objectFormat;
-        this.size = size;
-        this.isDeleted = isDeleted;
-        this.lastModifiedDate = lastModifiedDate;
     }
 
     public String getId() {
@@ -70,12 +55,12 @@ public class ObjectDTO {
         this.name = name;
     }
 
-    public String getPhysicalName() {
-        return physicalName;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public void setPhysicalName(String physicalName) {
-        this.physicalName = physicalName;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     public String getOrganizationId() {
@@ -110,28 +95,36 @@ public class ObjectDTO {
         this.thumbnailPath = thumbnailPath;
     }
 
-    public ObjectType getObjectType() {
-        return objectType;
+    public ObjectType getType() {
+        return type;
     }
 
-    public void setObjectType(ObjectType objectType) {
-        this.objectType = objectType;
+    public void setType(ObjectType type) {
+        this.type = type;
     }
 
-    public ObjectCategory getObjectCategory() {
-        return objectCategory;
+    public ObjectCategory getCategory() {
+        return category;
     }
 
-    public void setObjectCategory(ObjectCategory objectCategory) {
-        this.objectCategory = objectCategory;
+    public void setCategory(ObjectCategory category) {
+        this.category = category;
     }
 
-    public String getObjectFormat() {
-        return objectFormat;
+    public String getExtension() {
+        return extension;
     }
 
-    public void setObjectFormat(String objectFormat) {
-        this.objectFormat = objectFormat;
+    public void setExtension(String extension) {
+        this.extension = extension;
+    }
+
+    public String getMimeType() {
+        return mimeType;
+    }
+
+    public void setMimeType(String mimeType) {
+        this.mimeType = mimeType;
     }
 
     public Long getSize() {
@@ -148,6 +141,14 @@ public class ObjectDTO {
 
     public void setDeleted(boolean deleted) {
         isDeleted = deleted;
+    }
+
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
     }
 
     public Instant getLastModifiedDate() {
