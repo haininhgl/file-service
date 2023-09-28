@@ -1,11 +1,13 @@
 package com.miraway.mss.modules.object.entity;
 
 import com.miraway.mss.modules.common.entity.AbstractAuditingEntity;
+import com.miraway.mss.modules.common.validator.DatabaseIdConstraint;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import java.util.Objects;
@@ -18,8 +20,8 @@ public class ObjectUsage extends AbstractAuditingEntity<String> {
     @Id
     private String id;
 
+    @NotNull
     @DBRef
-    @NotBlank
     private Object object;
 
     private boolean isDeletable = false;
@@ -28,8 +30,7 @@ public class ObjectUsage extends AbstractAuditingEntity<String> {
     @Size(max = STRING_MAX_LENGTH)
     private String clientService;
 
-    @NotBlank
-    @Size(max = STRING_MAX_LENGTH)
+    @DatabaseIdConstraint
     private String clientId;
 
     @NotBlank
@@ -49,6 +50,7 @@ public class ObjectUsage extends AbstractAuditingEntity<String> {
         this.clientName = clientName;
     }
 
+    @Override
     public String getId() {
         return id;
     }
@@ -102,15 +104,18 @@ public class ObjectUsage extends AbstractAuditingEntity<String> {
         if (this == o) {
             return true;
         }
+
         if (!(o instanceof ObjectUsage)) {
             return false;
         }
-        return id != null && id.equals(((ObjectUsage) o).id);
+
+        ObjectUsage that = (ObjectUsage) o;
+        return Objects.equals(getId(), that.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, object, isDeletable, clientService, clientId, clientName);
+        return Objects.hash(getId());
     }
 
     @Override
