@@ -207,6 +207,7 @@ dependencies {
     implementation "org.springframework.cloud:spring-cloud-starter-consul-config"
     implementation "io.micrometer:micrometer-registry-prometheus"
     implementation "io.dropwizard.metrics:metrics-core"
+    implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.1'
     //jhipster-needle-gradle-dependency - JHipster will add additional dependencies here
 }
 

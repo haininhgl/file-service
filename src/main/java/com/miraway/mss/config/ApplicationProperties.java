@@ -13,4 +13,15 @@ public class ApplicationProperties {
     // jhipster-needle-application-properties-property
     // jhipster-needle-application-properties-property-getter
     // jhipster-needle-application-properties-property-class
+
+    private int maxPageSize = 1000;
+
+    public int getMaxPageSize() {
+        return maxPageSize;
+    }
+
+    public void setMaxPageSize(int maxPageSize) {
+        this.maxPageSize = maxPageSize;
+    }
+
 }

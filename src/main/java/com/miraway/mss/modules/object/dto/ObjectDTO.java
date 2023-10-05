@@ -6,6 +6,7 @@ import com.miraway.mss.modules.object.enumaration.ObjectType;
 import java.time.Instant;
 
 public class ObjectDTO {
+
     private String id;
 
     private String name;
@@ -37,6 +38,27 @@ public class ObjectDTO {
     private Instant lastModifiedDate;
 
     public ObjectDTO() {
+    }
+
+    public ObjectDTO(String id, String name, String displayName, String organizationId, String parentId,
+                     String path, String thumbnailPath, ObjectType type, ObjectCategory category,
+                     String extension, String mimeType, Long size, boolean isDeleted, String lastModifiedBy,
+                     Instant lastModifiedDate) {
+        this.id = id;
+        this.name = name;
+        this.displayName = displayName;
+        this.organizationId = organizationId;
+        this.parentId = parentId;
+        this.path = path;
+        this.thumbnailPath = thumbnailPath;
+        this.type = type;
+        this.category = category;
+        this.extension = extension;
+        this.mimeType = mimeType;
+        this.size = size;
+        this.isDeleted = isDeleted;
+        this.lastModifiedBy = lastModifiedBy;
+        this.lastModifiedDate = lastModifiedDate;
     }
 
     public String getId() {

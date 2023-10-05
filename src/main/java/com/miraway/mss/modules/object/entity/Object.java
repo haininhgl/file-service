@@ -37,7 +37,7 @@ public class Object extends AbstractAuditingEntity<String> {
     private String parentId;
 
     @Size(max = STRING_MAX_LENGTH)
-    @NotBlank
+//    @NotBlank
     private String path;
 
     @Size(max = STRING_MAX_LENGTH)
@@ -61,7 +61,9 @@ public class Object extends AbstractAuditingEntity<String> {
     public Object() {
     }
 
-    public Object(String id, String name, String displayName, String organizationId, String parentId, String path, String thumbnailPath, ObjectType type, @Nullable ObjectCategory category, String extension, String mimeType, Long size, boolean isDeleted) {
+    public Object(String id, String name, String displayName, String organizationId, String parentId,
+                  String path, String thumbnailPath, ObjectType type, @Nullable ObjectCategory category,
+                  String extension, String mimeType, Long size, boolean isDeleted) {
         this.id = id;
         this.name = name;
         this.displayName = displayName;

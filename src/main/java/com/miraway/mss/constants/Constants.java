@@ -1,6 +1,12 @@
 package com.miraway.mss.constants;
 
+import org.springframework.data.domain.Sort;
+
 public final class Constants {
+
+    public static final String LAST_MODIFIED_DATE = "lastModifiedDate";
+    public static final String DISPLAY_NAME = "displayName";
+    public static final String THUMBNAIL_PATH = "D:/miraway/folder.svg";
 
     // validation constants
     public static final int STRING_MAX_LENGTH = 256;
@@ -9,9 +15,13 @@ public final class Constants {
 
     public static final String DATABASE_ID_REGEX = "^[a-fA-F0-9]{24}$";
 
-    private Constants() {
-        throw new IllegalStateException("Constant class");
-    }
+    // pagination
+    public static final int DEFAULT_PAGE_SIZE = 10;
+    public static final int DEFAULT_PAGEABLE_INDEX = 0;
+    public static final int DEFAULT_PAGINATION_REQUEST_INDEX = DEFAULT_PAGEABLE_INDEX + 1;
+    public static final String DESCENDING_SORT_DIRECTION = Sort.Direction.DESC.name();
+    public static final String DEFAULT_SORT_DIRECTION = DESCENDING_SORT_DIRECTION;
+    public static final String DEFAULT_SORT_BY = LAST_MODIFIED_DATE;
 }
 
 

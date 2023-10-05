@@ -205,4 +205,5 @@ jhipster:
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
 
-# application:
+applications:
+  max-page-size: 1000

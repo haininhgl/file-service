@@ -20,7 +20,6 @@ import tech.jhipster.domain.util.JSR310DateConverters.ZonedDateTimeToDateConvert
 
 @Configuration
 @EnableMongock
-@EnableMongoRepositories("com.miraway.mss.repository")
 @Profile("!" + JHipsterConstants.SPRING_PROFILE_CLOUD)
 @Import(value = MongoAutoConfiguration.class)
 @EnableMongoAuditing(auditorAwareRef = "springSecurityAuditorAware")
