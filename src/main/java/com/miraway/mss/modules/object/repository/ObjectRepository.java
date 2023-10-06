@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ObjectRepository extends MongoRepository<Object, String>,CustomizedObjectRepository{
+public interface ObjectRepository extends MongoRepository<Object, String>,CustomizedObjectRepository {
 
     boolean existsByDisplayNameAndParentId(String displayName, String parentId);
 

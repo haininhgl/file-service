@@ -22,7 +22,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.miraway.mss.constants.Constants.THUMBNAIL_PATH;
@@ -40,7 +43,7 @@ public class ObjectServiceImpl implements ObjectService {
     }
 
     @Override
-    public Page<Object> getObjectList(ObjectFilter filter, Pageable pageable){
+    public Page<Object> getObjectList(ObjectFilter filter, Pageable pageable) {
         return objectRepository.getObjectList(filter, pageable);
     }
 
@@ -54,14 +57,14 @@ public class ObjectServiceImpl implements ObjectService {
         }
         Object object = new Object();
         BeanUtils.copyProperties(request, object);
-        object.setName(UUID.randomUUID().toString().substring(0,10));
+        object.setName(UUID.randomUUID().toString().substring(0, 10));
         object.setThumbnailPath(THUMBNAIL_PATH);
-        return objectRepository.save(object) ;
+        return objectRepository.save(object);
     }
 
     public Object getById(String id) throws ResourceNotFoundException {
         Object object = objectRepository.findById(id).orElse(null);
-        if (object == null){
+        if (object == null) {
             throw new ResourceNotFoundException("Object not found!");
         }
 

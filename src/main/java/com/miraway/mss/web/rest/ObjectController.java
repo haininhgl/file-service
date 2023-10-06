@@ -47,16 +47,14 @@ public class ObjectController {
     }
 
     @PostMapping("/objects")
-    public APIResponse<ObjectDTO> createFolder(@Valid @RequestBody ObjectRequest request)
-        throws BadRequestException {
+    public APIResponse<ObjectDTO> createFolder(@Valid @RequestBody ObjectRequest request) throws BadRequestException {
         Object object = objectService.createFolder(request);
         ObjectDTO objectDTO = objectMapper.toDto(object);
         return APIResponse.newSuccessResponse(objectDTO);
     }
 
     @GetMapping("/objects")
-    public APIResponse<List<ObjectDTO>> getObjectList(@Valid ObjectFilter filter, PaginationRequest paginationRequest)
-        throws ResourceNotFoundException, ForbiddenException {
+    public APIResponse<List<ObjectDTO>> getObjectList(@Valid ObjectFilter filter, PaginationRequest paginationRequest) throws ResourceNotFoundException, ForbiddenException {
         if (StringUtils.isBlank(paginationRequest.getSortBy())) {
             paginationRequest.setSortBy(DEFAULT_SORT_BY);
             paginationRequest.setSortDirection(DEFAULT_SORT_DIRECTION);
@@ -70,7 +68,8 @@ public class ObjectController {
     }
 
     @GetMapping("/folders")
-    public APIResponse<List<ObjectDTO>> getFolderList(@Valid ObjectFilter filter, PaginationRequest paginationRequest) throws ForbiddenException, ResourceNotFoundException {if (StringUtils.isBlank(paginationRequest.getSortBy())) {
+    public APIResponse<List<ObjectDTO>> getFolderList(@Valid ObjectFilter filter, PaginationRequest paginationRequest) throws ForbiddenException, ResourceNotFoundException {
+        if (StringUtils.isBlank(paginationRequest.getSortBy())) {
             paginationRequest.setSortBy(DEFAULT_SORT_BY);
             paginationRequest.setSortDirection(DEFAULT_SORT_DIRECTION);
         }
@@ -97,7 +96,7 @@ public class ObjectController {
     }
 
     @DeleteMapping("/objects")
-    public APIResponse<List<String>> deleteObjectById(@RequestParam (value = "ids") Set<String> ids) throws ResourceNotFoundException, ForbiddenException {
+    public APIResponse<List<String>> deleteObjectById(@RequestParam(value = "ids") Set<String> ids) throws ResourceNotFoundException, ForbiddenException {
         List<String> deletedObjectIds = objectService.softDelete(ids);
         return APIResponse.newSuccessResponse(deletedObjectIds);
     }

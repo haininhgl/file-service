@@ -5,7 +5,6 @@ import com.miraway.mss.modules.object.entity.Object;
 import com.miraway.mss.modules.object.enumaration.ObjectCategory;
 import com.miraway.mss.modules.object.enumaration.ObjectType;
 import org.apache.commons.lang3.StringUtils;
-import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -19,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import static com.miraway.mss.constants.Constants.*;
 import static java.util.Locale.ENGLISH;
@@ -57,7 +55,7 @@ public class CustomizedObjectRepositoryImpl implements CustomizedObjectRepositor
         String text = filter.getText();
         Set<String> parentIds = filter.getParentIds();
         ObjectType type = filter.getType();
-        Set<ObjectCategory> objectCategory = filter.getObjectCategory();
+        Set<ObjectCategory> category = filter.getObjectCategory();
 
 
         if (StringUtils.isNotBlank(text)) {
@@ -70,18 +68,16 @@ public class CustomizedObjectRepositoryImpl implements CustomizedObjectRepositor
             );
         }
 
-        if (!CollectionUtils.isEmpty(parentIds)){
-            Set<ObjectId> objectIds = parentIds.stream().map(ObjectId::new)
-                .collect(Collectors.toSet());
-            query.addCriteria(Criteria.where("parent.$id").in(objectIds));
+        if (!CollectionUtils.isEmpty(parentIds)) {
+            criteriaList.add(Criteria.where("parentId").in(parentIds));
         }
 
         if (type != null) {
             criteriaList.add(Criteria.where("type").is(type));
         }
 
-        if (!CollectionUtils.isEmpty(objectCategory)) {
-            criteriaList.add(Criteria.where("objectCategory").in(objectCategory));
+        if (!CollectionUtils.isEmpty(category)) {
+            criteriaList.add(Criteria.where("category").in(category));
         }
 
         if (!CollectionUtils.isEmpty(criteriaList)) {
