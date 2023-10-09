@@ -22,7 +22,7 @@ public interface ObjectService {
 
     Object updateById(String id, RenameObjectRequest request) throws ForbiddenException, ResourceNotFoundException, BadRequestException;
 
-    List<Object> updateFile(List<MoveFileRequest> requests) throws ResourceNotFoundException, IOException;
+    List<Object> updateFile(List<MoveFileRequest> requests) throws ResourceNotFoundException;
 
     List<String> softDelete(Set<String> ids) throws ResourceNotFoundException, ForbiddenException;
 }

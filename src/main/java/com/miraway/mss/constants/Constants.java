@@ -6,6 +6,9 @@ public final class Constants {
 
     public static final String LAST_MODIFIED_DATE = "lastModifiedDate";
     public static final String DISPLAY_NAME = "displayName";
+    public static final String PARENT_ID = "parentId";
+    public static final String TYPE = "type";
+    public static final String CATEGORY = "category";
     public static final String THUMBNAIL_PATH = "D:/miraway/folder.svg";
 
     // validation constants

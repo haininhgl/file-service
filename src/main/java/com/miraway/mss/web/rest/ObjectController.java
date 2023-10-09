@@ -22,7 +22,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -90,7 +89,7 @@ public class ObjectController {
     }
 
     @PutMapping("/moveObjects")
-    public APIResponse<List<Object>> moveObject(@RequestBody List<MoveFileRequest> requests) throws ResourceNotFoundException, IOException {
+    public APIResponse<List<Object>> moveObject(@RequestBody List<MoveFileRequest> requests) throws ResourceNotFoundException {
         objectService.updateFile(requests);
         return APIResponse.newSuccessResponse();
     }

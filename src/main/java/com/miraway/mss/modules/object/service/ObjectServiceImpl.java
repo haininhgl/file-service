@@ -17,11 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -101,34 +96,30 @@ public class ObjectServiceImpl implements ObjectService {
     }
 
     @Override
-    public List<Object> updateFile(List<MoveFileRequest> requests) throws ResourceNotFoundException, IOException {
+    public List<Object> updateFile(List<MoveFileRequest> requests) throws ResourceNotFoundException {
         List<Object> movedObjects = new ArrayList<>();
 
         for (MoveFileRequest request : requests) {
-
             Object sourceObject = getById(request.getIdSource());
             Object targetObject = getById(request.getIdTarget());
 
             if (sourceObject == null || targetObject == null) {
                 throw new ResourceNotFoundException("Không tìm thấy tài nguyên");
             } else {
-                String sourcePath = getPathById(request.getIdSource());
                 String targetPath = getPathById(request.getIdTarget());
                 String name = findNameById(request.getIdSource());
-                Path source = Paths.get(sourcePath);
-                Path target = Paths.get(targetPath);
-                Files.move(source, target.resolve(source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
                 sourceObject.setPath(targetPath + File.separator + name);
                 objectRepository.save(sourceObject);
             }
         }
+
 
         return movedObjects;
     }
 
     public List<String> softDelete(Set<String> ids) throws ResourceNotFoundException, ForbiddenException {
         List<String> deletedObjectIds = new ArrayList<>();
-        StringBuilder builder = new StringBuilder("Những file đã xóa: ");
+        StringBuilder builder = new StringBuilder();
 
         for (String id : ids) {
             Object object = getById(id);

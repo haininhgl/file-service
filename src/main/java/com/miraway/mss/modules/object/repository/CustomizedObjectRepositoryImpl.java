@@ -69,15 +69,15 @@ public class CustomizedObjectRepositoryImpl implements CustomizedObjectRepositor
         }
 
         if (!CollectionUtils.isEmpty(parentIds)) {
-            criteriaList.add(Criteria.where("parentId").in(parentIds));
+            criteriaList.add(Criteria.where(PARENT_ID).in(parentIds));
         }
 
         if (type != null) {
-            criteriaList.add(Criteria.where("type").is(type));
+            criteriaList.add(Criteria.where(TYPE).is(type));
         }
 
         if (!CollectionUtils.isEmpty(category)) {
-            criteriaList.add(Criteria.where("category").in(category));
+            criteriaList.add(Criteria.where(CATEGORY).in(category));
         }
 
         if (!CollectionUtils.isEmpty(criteriaList)) {
