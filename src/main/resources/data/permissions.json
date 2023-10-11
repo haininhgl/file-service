@@ -1,0 +1,70 @@
+[
+  {
+    "group": "storage",
+    "resource": "*",
+    "action": "*",
+    "groupName": {
+      "en": "Storage",
+      "vi": "Lưu trữ"
+    },
+    "resourceName": {
+      "en": "",
+      "vi": "Lưu trữ"
+    },
+    "actionName": {
+      "en": "All",
+      "vi": "Tất cả"
+    }
+  },
+  {
+    "group": "storage",
+    "resource": "storage",
+    "action": "read",
+    "groupName": {
+      "en": "Storage",
+      "vi": "Lưu trữ"
+    },
+    "resourceName": {
+      "en": "Storage",
+      "vi": "Lưu trữ"
+    },
+    "actionName": {
+      "en": "Read",
+      "vi": "Xem"
+    }
+  },
+  {
+    "group": "storage",
+    "resource": "storage",
+    "action": "create",
+    "groupName": {
+      "en": "Storage",
+      "vi": "Lưu trữ"
+    },
+    "resourceName": {
+      "en": "Storage",
+      "vi": "Lưu trữ"
+    },
+    "actionName": {
+      "en": "Create",
+      "vi": "Thêm mới"
+    }
+  },
+  {
+    "group": "storage",
+    "resource": "storage",
+    "action": "update",
+    "groupName": {
+      "en": "Storage",
+      "vi": "Lưu trữ"
+    },
+    "resourceName": {
+      "en": "Storage",
+      "vi": "Lưu trữ"
+    },
+    "actionName": {
+      "en": "Update",
+      "vi": "Sửa"
+    }
+  }
+]

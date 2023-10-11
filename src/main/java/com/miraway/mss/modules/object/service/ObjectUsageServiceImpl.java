@@ -10,8 +10,9 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ObjectUsageServiceImpl implements ObjectUsageService{
@@ -26,8 +27,9 @@ public class ObjectUsageServiceImpl implements ObjectUsageService{
     }
 
     @Override
-    public List<ObjectUsage> getByObjectId(String id){
-        return objectUsageRepository.getByObjectId(Collections.singleton(new ObjectId(id)));
+    public List<ObjectUsage> getByObjectId(Set<String> ids){
+        Set<ObjectId> objectIds = ids.stream().map(ObjectId::new).collect(Collectors.toSet());
+        return objectUsageRepository.getByObjectId(objectIds);
     }
 
     @Override

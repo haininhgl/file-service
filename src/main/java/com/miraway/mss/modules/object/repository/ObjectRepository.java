@@ -12,5 +12,4 @@ public interface ObjectRepository extends MongoRepository<Object, String>,Custom
     boolean existsByDisplayNameAndParentId(String displayName, String parentId);
 
     List<Object> findByParentId(String parentId);
-
 }

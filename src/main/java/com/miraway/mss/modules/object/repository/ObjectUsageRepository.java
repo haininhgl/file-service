@@ -13,5 +13,5 @@ import java.util.Set;
 public interface ObjectUsageRepository extends MongoRepository<ObjectUsage, String> {
 
     @Query("{'object.$id': { $in: ?0 }}")
-    List<ObjectUsage> getByObjectId(Set<ObjectId> id);
+    List<ObjectUsage> getByObjectId(Set<ObjectId> ids);
 }

@@ -3,6 +3,7 @@ package com.miraway.mss.web.rest;
 import com.miraway.mss.config.ApplicationProperties;
 import com.miraway.mss.modules.common.exception.BadRequestException;
 import com.miraway.mss.modules.common.exception.ForbiddenException;
+import com.miraway.mss.modules.common.exception.InternalServerException;
 import com.miraway.mss.modules.common.exception.ResourceNotFoundException;
 import com.miraway.mss.modules.object.dto.ObjectDTO;
 import com.miraway.mss.modules.object.dto.filter.ObjectFilter;
@@ -53,7 +54,7 @@ public class ObjectController {
     }
 
     @GetMapping("/objects")
-    public APIResponse<List<ObjectDTO>> getObjectList(@Valid ObjectFilter filter, PaginationRequest paginationRequest) throws ResourceNotFoundException, ForbiddenException {
+    public APIResponse<List<ObjectDTO>> getObjectList(@Valid ObjectFilter filter, PaginationRequest paginationRequest) throws ResourceNotFoundException, ForbiddenException, InternalServerException {
         if (StringUtils.isBlank(paginationRequest.getSortBy())) {
             paginationRequest.setSortBy(DEFAULT_SORT_BY);
             paginationRequest.setSortDirection(DEFAULT_SORT_DIRECTION);
@@ -67,7 +68,7 @@ public class ObjectController {
     }
 
     @GetMapping("/folders")
-    public APIResponse<List<ObjectDTO>> getFolderList(@Valid ObjectFilter filter, PaginationRequest paginationRequest) throws ForbiddenException, ResourceNotFoundException {
+    public APIResponse<List<ObjectDTO>> getFolderList(@Valid ObjectFilter filter, PaginationRequest paginationRequest) throws ForbiddenException, ResourceNotFoundException, InternalServerException {
         if (StringUtils.isBlank(paginationRequest.getSortBy())) {
             paginationRequest.setSortBy(DEFAULT_SORT_BY);
             paginationRequest.setSortDirection(DEFAULT_SORT_DIRECTION);
@@ -89,13 +90,13 @@ public class ObjectController {
     }
 
     @PutMapping("/moveObjects")
-    public APIResponse<List<Object>> moveObject(@RequestBody List<MoveFileRequest> requests) throws ResourceNotFoundException {
-        objectService.updateFile(requests);
+    public APIResponse<List<Object>> moveObject(@RequestBody MoveFileRequest request) throws ResourceNotFoundException {
+        objectService.updateFile(request);
         return APIResponse.newSuccessResponse();
     }
 
     @DeleteMapping("/objects")
-    public APIResponse<List<String>> deleteObjectById(@RequestParam(value = "ids") Set<String> ids) throws ResourceNotFoundException, ForbiddenException {
+    public APIResponse<List<String>> deleteObjectById(@RequestParam(value = "ids") Set<String> ids) throws ResourceNotFoundException, BadRequestException {
         List<String> deletedObjectIds = objectService.softDelete(ids);
         return APIResponse.newSuccessResponse(deletedObjectIds);
     }

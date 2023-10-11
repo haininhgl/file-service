@@ -10,6 +10,10 @@ public final class Constants {
     public static final String TYPE = "type";
     public static final String CATEGORY = "category";
     public static final String THUMBNAIL_PATH = "D:/miraway/folder.svg";
+    public static final String INIT_DATA_TOPIC = "initData";
+    public static final String ROOT_ORGANIZATION_NAME = "__ROOT_ORGANIZATION__";
+    public static final String ORGANIZATION_ID = "organizationId";
+    public static final String ID = "_id";
 
     // validation constants
     public static final int STRING_MAX_LENGTH = 256;

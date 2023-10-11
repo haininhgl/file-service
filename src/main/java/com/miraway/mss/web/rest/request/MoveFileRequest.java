@@ -2,14 +2,16 @@ package com.miraway.mss.web.rest.request;
 
 
 import com.miraway.mss.modules.common.validator.DatabaseIdConstraint;
+import com.miraway.mss.modules.common.validator.DatabaseIdListConstraint;
 
 import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 public class MoveFileRequest {
 
     @NotBlank
-    @DatabaseIdConstraint
-    private String idSource;
+    @DatabaseIdListConstraint
+    private Set<String> idSources;
 
     @NotBlank
     @DatabaseIdConstraint
@@ -18,17 +20,17 @@ public class MoveFileRequest {
     public MoveFileRequest() {
     }
 
-    public MoveFileRequest(String idSource, String idTarget) {
-        this.idSource = idSource;
+    public MoveFileRequest(Set<String> idSources, String idTarget) {
+        this.idSources = idSources;
         this.idTarget = idTarget;
     }
 
-    public String getIdSource() {
-        return idSource;
+    public Set<String> getIdSources() {
+        return idSources;
     }
 
-    public void setIdSource(String idSource) {
-        this.idSource = idSource;
+    public void setIdSources(Set<String> idSources) {
+        this.idSources = idSources;
     }
 
     public String getIdTarget() {

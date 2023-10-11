@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Collation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.util.CollectionUtils;
 
@@ -42,6 +43,17 @@ public class CustomizedObjectRepositoryImpl implements CustomizedObjectRepositor
         );
     }
 
+    @Override
+    public void updateIsDeleted(Set<String> objectIdDeletable) {
+        ObjectFilter filter = new ObjectFilter();
+        filter.setIds(objectIdDeletable);
+        Query query = buildObjectFilterQuery(filter);
+        Update update = new Update();
+        update.set("isDeleted", true);
+
+        mongoTemplate.updateMulti(query, update, Object.class);
+    }
+
     private Query buildObjectFilterQuery(ObjectFilter filter) {
         Query query = new Query();
 
@@ -56,7 +68,8 @@ public class CustomizedObjectRepositoryImpl implements CustomizedObjectRepositor
         Set<String> parentIds = filter.getParentIds();
         ObjectType type = filter.getType();
         Set<ObjectCategory> category = filter.getObjectCategory();
-
+        Set<String> objectIds = filter.getIds();
+        Set<String> organizationIds = filter.getOrganizationIds();
 
         if (StringUtils.isNotBlank(text)) {
             text = Pattern.quote(text);
@@ -78,6 +91,14 @@ public class CustomizedObjectRepositoryImpl implements CustomizedObjectRepositor
 
         if (!CollectionUtils.isEmpty(category)) {
             criteriaList.add(Criteria.where(CATEGORY).in(category));
+        }
+
+        if (!CollectionUtils.isEmpty(objectIds)) {
+            criteriaList.add(Criteria.where(ID).in(objectIds));
+        }
+
+        if (!CollectionUtils.isEmpty(organizationIds)) {
+            criteriaList.add(Criteria.where(ORGANIZATION_ID).in(organizationIds));
         }
 
         if (!CollectionUtils.isEmpty(criteriaList)) {

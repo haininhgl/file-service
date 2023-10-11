@@ -1,5 +1,6 @@
 package com.miraway.mss.modules.object.dto.filter;
 
+import com.miraway.mss.modules.common.validator.DatabaseIdListConstraint;
 import com.miraway.mss.modules.object.enumaration.ObjectCategory;
 import com.miraway.mss.modules.object.enumaration.ObjectType;
 
@@ -12,6 +13,11 @@ public class ObjectFilter {
     private String text = "";
 
     private Set<String> parentIds = new HashSet<>();
+
+    @DatabaseIdListConstraint
+    private Set<String> organizationIds = new HashSet<>();
+
+    private Set<String> ids = new HashSet<>();
 
     private ObjectType type;
 
@@ -36,6 +42,14 @@ public class ObjectFilter {
         this.parentIds = parentIds;
     }
 
+    public Set<String> getOrganizationIds() {
+        return organizationIds;
+    }
+
+    public void setOrganizationIds(Set<String> organizationIds) {
+        this.organizationIds = organizationIds;
+    }
+
     public ObjectType getType() {
         return type;
     }
@@ -50,5 +64,13 @@ public class ObjectFilter {
 
     public void setObjectCategory(Set<ObjectCategory> objectCategory) {
         this.objectCategory = objectCategory;
+    }
+
+    public Set<String> getIds() {
+        return ids;
+    }
+
+    public void setIds(Set<String> ids) {
+        this.ids = ids;
     }
 }

@@ -5,10 +5,11 @@ import com.miraway.mss.modules.object.entity.ObjectUsage;
 import com.miraway.mss.web.rest.request.ObjectUsageRequest;
 
 import java.util.List;
+import java.util.Set;
 
 public interface ObjectUsageService {
 
-    List<ObjectUsage> getByObjectId(String id);
+    List<ObjectUsage> getByObjectId(Set<String> ids);
 
     ObjectUsage createObjectUsage(ObjectUsageRequest request) throws ResourceNotFoundException;
 }
