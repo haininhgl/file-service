@@ -18,7 +18,7 @@ import java.util.Set;
 public interface ObjectService {
     Page<Object> getObjectList(ObjectFilter filter, Pageable pageable) throws ResourceNotFoundException, ForbiddenException, InternalServerException;
 
-    Object createFolder(ObjectRequest request) throws BadRequestException;
+    Object createFolder(ObjectRequest request) throws BadRequestException, ForbiddenException, InternalServerException, ResourceNotFoundException;
 
     Object updateById(String id, RenameObjectRequest request) throws ForbiddenException, ResourceNotFoundException, BadRequestException;
 

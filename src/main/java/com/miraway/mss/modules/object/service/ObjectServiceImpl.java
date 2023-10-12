@@ -71,13 +71,22 @@ public class ObjectServiceImpl implements ObjectService {
     }
 
     @Override
-    public Object createFolder(ObjectRequest request) throws BadRequestException {
+    public Object createFolder(ObjectRequest request) throws BadRequestException, ForbiddenException, InternalServerException, ResourceNotFoundException {
         boolean folderExists = objectRepository.existsByDisplayNameAndParentId(
             request.getDisplayName(), request.getParentId());
 
         if (folderExists) {
             throw new BadRequestException("Folder with the same displayName and parentId already exists.");
         }
+
+        UserDTO currentUser = userService.getCurrentLoginUser();
+        OrganizationDTO currentUserOrganization = currentUser.getOrganization();
+        String newOrganization = request.getOrganizationId();
+
+        if (!currentUserOrganization.getId().equals(newOrganization)) {
+            throw new  ForbiddenException("User is not authorized to create folders");
+        }
+
         Object object = new Object();
         BeanUtils.copyProperties(request, object);
         object.setName(UUID.randomUUID().toString().substring(0, 10));
