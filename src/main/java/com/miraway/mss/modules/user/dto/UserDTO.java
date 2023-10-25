@@ -2,7 +2,6 @@ package com.miraway.mss.modules.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.miraway.mss.modules.organization.dto.OrganizationDTO;
-
 import java.time.Instant;
 import java.util.Objects;
 
@@ -131,4 +130,3 @@ public class UserDTO {
         return Objects.hash(getId(), getUsername());
     }
 }
-

@@ -1,9 +1,16 @@
 package com.miraway.mss.modules.object.repository;
 
+import static com.miraway.mss.constants.Constants.*;
+import static java.util.Locale.ENGLISH;
+
 import com.miraway.mss.modules.object.dto.filter.ObjectFilter;
 import com.miraway.mss.modules.object.entity.Object;
 import com.miraway.mss.modules.object.enumaration.ObjectCategory;
 import com.miraway.mss.modules.object.enumaration.ObjectType;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,15 +22,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.regex.Pattern;
-
-import static com.miraway.mss.constants.Constants.*;
-import static java.util.Locale.ENGLISH;
-
-public class CustomizedObjectRepositoryImpl implements CustomizedObjectRepository{
+public class CustomizedObjectRepositoryImpl implements CustomizedObjectRepository {
 
     private final MongoTemplate mongoTemplate;
 
@@ -44,12 +43,12 @@ public class CustomizedObjectRepositoryImpl implements CustomizedObjectRepositor
     }
 
     @Override
-    public void updateIsDeleted(Set<String> objectIdDeletable) {
+    public void softDeleteObjects(Set<String> objectIds) {
         ObjectFilter filter = new ObjectFilter();
-        filter.setIds(objectIdDeletable);
+        filter.setIds(objectIds);
         Query query = buildObjectFilterQuery(filter);
         Update update = new Update();
-        update.set("isDeleted", true);
+        update.set(IS_DELETED, true);
 
         mongoTemplate.updateMulti(query, update, Object.class);
     }
@@ -67,18 +66,13 @@ public class CustomizedObjectRepositoryImpl implements CustomizedObjectRepositor
         String text = filter.getText();
         Set<String> parentIds = filter.getParentIds();
         ObjectType type = filter.getType();
-        Set<ObjectCategory> category = filter.getObjectCategory();
+        Set<ObjectCategory> categories = filter.getObjectCategory();
         Set<String> objectIds = filter.getIds();
         Set<String> organizationIds = filter.getOrganizationIds();
 
         if (StringUtils.isNotBlank(text)) {
             text = Pattern.quote(text);
-            criteriaList.add(
-                new Criteria()
-                    .orOperator(
-                        Criteria.where(DISPLAY_NAME).regex(text, "i")
-                    )
-            );
+            criteriaList.add(new Criteria().orOperator(Criteria.where(DISPLAY_NAME).regex(text, "i")));
         }
 
         if (!CollectionUtils.isEmpty(parentIds)) {
@@ -89,8 +83,8 @@ public class CustomizedObjectRepositoryImpl implements CustomizedObjectRepositor
             criteriaList.add(Criteria.where(TYPE).is(type));
         }
 
-        if (!CollectionUtils.isEmpty(category)) {
-            criteriaList.add(Criteria.where(CATEGORY).in(category));
+        if (!CollectionUtils.isEmpty(categories)) {
+            criteriaList.add(Criteria.where(CATEGORY).in(categories));
         }
 
         if (!CollectionUtils.isEmpty(objectIds)) {

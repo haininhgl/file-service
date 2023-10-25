@@ -1,5 +1,7 @@
 package com.miraway.mss.kafka.producers;
 
+import static com.miraway.mss.constants.Constants.INIT_DATA_TOPIC;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.miraway.mss.kafka.messages.InitDataMessage;
 import com.miraway.mss.modules.common.exception.InternalServerException;
@@ -8,8 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Component;
-
-import static com.miraway.mss.constants.Constants.INIT_DATA_TOPIC;
 
 @Component
 public class InitDataProducer {

@@ -1,24 +1,23 @@
 package com.miraway.mss.modules.object.entity;
 
+import static com.miraway.mss.constants.Constants.STRING_MAX_LENGTH;
+
 import com.miraway.mss.modules.common.entity.AbstractAuditingEntity;
 import com.miraway.mss.modules.common.validator.DatabaseIdConstraint;
 import com.miraway.mss.modules.common.validator.OptionalDatabaseIdConstraint;
 import com.miraway.mss.modules.object.enumaration.ObjectCategory;
 import com.miraway.mss.modules.object.enumaration.ObjectType;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
+import java.util.Objects;
 import javax.annotation.Nullable;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import java.util.Objects;
-
-import static com.miraway.mss.constants.Constants.STRING_MAX_LENGTH;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "objects")
 public class Object extends AbstractAuditingEntity<String> {
+
     @Id
     private String id;
 
@@ -37,8 +36,7 @@ public class Object extends AbstractAuditingEntity<String> {
     private String parentId;
 
     @Size(max = STRING_MAX_LENGTH)
-//    @NotBlank
-    private String path;
+    private String path = "";
 
     @Size(max = STRING_MAX_LENGTH)
     @NotBlank
@@ -58,12 +56,23 @@ public class Object extends AbstractAuditingEntity<String> {
 
     private boolean isDeleted = false;
 
-    public Object() {
-    }
+    public Object() {}
 
-    public Object(String id, String name, String displayName, String organizationId, String parentId,
-                  String path, String thumbnailPath, ObjectType type, @Nullable ObjectCategory category,
-                  String extension, String mimeType, Long size, boolean isDeleted) {
+    public Object(
+        String id,
+        String name,
+        String displayName,
+        String organizationId,
+        String parentId,
+        String path,
+        String thumbnailPath,
+        ObjectType type,
+        @Nullable ObjectCategory category,
+        String extension,
+        String mimeType,
+        Long size,
+        boolean isDeleted
+    ) {
         this.id = id;
         this.name = name;
         this.displayName = displayName;
@@ -207,20 +216,44 @@ public class Object extends AbstractAuditingEntity<String> {
 
     @Override
     public String toString() {
-        return "Object{" +
-            "id='" + id + '\'' +
-            ", name='" + name + '\'' +
-            ", displayName='" + displayName + '\'' +
-            ", organizationId='" + organizationId + '\'' +
-            ", parentId='" + parentId + '\'' +
-            ", path='" + path + '\'' +
-            ", thumbnailPath='" + thumbnailPath + '\'' +
-            ", type=" + type +
-            ", category=" + category +
-            ", extension='" + extension + '\'' +
-            ", mimeType='" + mimeType + '\'' +
-            ", size=" + size +
-            ", isDeleted=" + isDeleted +
-            '}';
+        return (
+            "Object{" +
+            "id='" +
+            id +
+            '\'' +
+            ", name='" +
+            name +
+            '\'' +
+            ", displayName='" +
+            displayName +
+            '\'' +
+            ", organizationId='" +
+            organizationId +
+            '\'' +
+            ", parentId='" +
+            parentId +
+            '\'' +
+            ", path='" +
+            path +
+            '\'' +
+            ", thumbnailPath='" +
+            thumbnailPath +
+            '\'' +
+            ", type=" +
+            type +
+            ", category=" +
+            category +
+            ", extension='" +
+            extension +
+            '\'' +
+            ", mimeType='" +
+            mimeType +
+            '\'' +
+            ", size=" +
+            size +
+            ", isDeleted=" +
+            isDeleted +
+            '}'
+        );
     }
 }

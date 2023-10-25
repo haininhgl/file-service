@@ -1,12 +1,12 @@
 package com.miraway.mss.web.rest.request;
 
+import static com.miraway.mss.constants.Constants.STRING_MAX_LENGTH;
+
 import com.miraway.mss.modules.common.validator.DatabaseIdConstraint;
 import com.miraway.mss.modules.common.validator.OptionalDatabaseIdConstraint;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-
-import static com.miraway.mss.constants.Constants.STRING_MAX_LENGTH;
+import org.apache.commons.lang3.StringUtils;
 
 public class ObjectRequest {
 
@@ -20,8 +20,7 @@ public class ObjectRequest {
     @OptionalDatabaseIdConstraint
     private String parentId;
 
-    public ObjectRequest() {
-    }
+    public ObjectRequest() {}
 
     public ObjectRequest(String displayName, String organizationId, String parentId) {
         this.displayName = displayName;
@@ -30,7 +29,7 @@ public class ObjectRequest {
     }
 
     public String getDisplayName() {
-        return displayName;
+        return StringUtils.trim(displayName);
     }
 
     public void setDisplayName(String displayName) {

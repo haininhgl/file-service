@@ -1,18 +1,16 @@
 package com.miraway.mss.modules.object.entity;
 
+import static com.miraway.mss.constants.Constants.STRING_MAX_LENGTH;
+
 import com.miraway.mss.modules.common.entity.AbstractAuditingEntity;
 import com.miraway.mss.modules.common.validator.DatabaseIdConstraint;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
-
+import java.util.Objects;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import java.util.Objects;
-
-import static com.miraway.mss.constants.Constants.STRING_MAX_LENGTH;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "objectUsages")
 public class ObjectUsage extends AbstractAuditingEntity<String> {
@@ -37,11 +35,9 @@ public class ObjectUsage extends AbstractAuditingEntity<String> {
     @Size(max = STRING_MAX_LENGTH)
     private String clientName;
 
-    public ObjectUsage() {
-    }
+    public ObjectUsage() {}
 
-    public ObjectUsage(String id, Object object, boolean isDeletable,
-                       String clientService, String clientId, String clientName) {
+    public ObjectUsage(String id, Object object, boolean isDeletable, String clientService, String clientId, String clientName) {
         this.id = id;
         this.object = object;
         this.isDeletable = isDeletable;
@@ -120,13 +116,25 @@ public class ObjectUsage extends AbstractAuditingEntity<String> {
 
     @Override
     public String toString() {
-        return "ObjectUsage{" +
-            "id='" + id + '\'' +
-            ", object=" + object +
-            ", isDeletable=" + isDeletable +
-            ", clientService='" + clientService + '\'' +
-            ", clientId='" + clientId + '\'' +
-            ", clientName='" + clientName + '\'' +
-            '}';
+        return (
+            "ObjectUsage{" +
+            "id='" +
+            id +
+            '\'' +
+            ", object=" +
+            object +
+            ", isDeletable=" +
+            isDeletable +
+            ", clientService='" +
+            clientService +
+            '\'' +
+            ", clientId='" +
+            clientId +
+            '\'' +
+            ", clientName='" +
+            clientName +
+            '\'' +
+            '}'
+        );
     }
 }

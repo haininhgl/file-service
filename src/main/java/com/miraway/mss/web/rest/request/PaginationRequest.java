@@ -1,12 +1,12 @@
 package com.miraway.mss.web.rest.request;
 
+import static com.miraway.mss.constants.Constants.*;
+import static com.miraway.mss.constants.Constants.DEFAULT_PAGE_SIZE;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-
-import static com.miraway.mss.constants.Constants.*;
-import static com.miraway.mss.constants.Constants.DEFAULT_PAGE_SIZE;
 
 public class PaginationRequest {
 

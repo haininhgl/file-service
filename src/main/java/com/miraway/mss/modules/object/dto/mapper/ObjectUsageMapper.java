@@ -5,6 +5,5 @@ import com.miraway.mss.modules.object.dto.ObjectUsageDTO;
 import com.miraway.mss.modules.object.entity.ObjectUsage;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring", uses = {ObjectMapper.class})
-public interface ObjectUsageMapper extends EntityMapper<ObjectUsageDTO, ObjectUsage> {
-}
+@Mapper(componentModel = "spring", uses = { ObjectMapper.class })
+public interface ObjectUsageMapper extends EntityMapper<ObjectUsageDTO, ObjectUsage> {}

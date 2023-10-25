@@ -3,10 +3,8 @@ package com.miraway.mss.modules.object.dto.filter;
 import com.miraway.mss.modules.common.validator.DatabaseIdListConstraint;
 import com.miraway.mss.modules.object.enumaration.ObjectCategory;
 import com.miraway.mss.modules.object.enumaration.ObjectType;
-
 import java.util.HashSet;
 import java.util.Set;
-
 
 public class ObjectFilter {
 
@@ -23,8 +21,7 @@ public class ObjectFilter {
 
     private Set<ObjectCategory> objectCategory = new HashSet<>();
 
-    public ObjectFilter() {
-    }
+    public ObjectFilter() {}
 
     public String getText() {
         return text;

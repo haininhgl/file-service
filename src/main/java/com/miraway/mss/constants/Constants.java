@@ -14,6 +14,7 @@ public final class Constants {
     public static final String ROOT_ORGANIZATION_NAME = "__ROOT_ORGANIZATION__";
     public static final String ORGANIZATION_ID = "organizationId";
     public static final String ID = "_id";
+    public static final String IS_DELETED = "isDeleted";
 
     // validation constants
     public static final int STRING_MAX_LENGTH = 256;
@@ -29,7 +30,8 @@ public final class Constants {
     public static final String DESCENDING_SORT_DIRECTION = Sort.Direction.DESC.name();
     public static final String DEFAULT_SORT_DIRECTION = DESCENDING_SORT_DIRECTION;
     public static final String DEFAULT_SORT_BY = LAST_MODIFIED_DATE;
+
+    private Constants() {
+        throw new IllegalStateException("Constant class");
+    }
 }
-
-
-

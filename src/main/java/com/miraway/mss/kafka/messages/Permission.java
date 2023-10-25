@@ -1,14 +1,13 @@
 package com.miraway.mss.kafka.messages;
 
+import static com.miraway.mss.constants.Constants.STRING_MAX_LENGTH;
+
 import com.miraway.mss.modules.common.entity.MultiLanguage;
 import com.miraway.mss.security.MssGuard;
-import org.apache.commons.lang3.StringUtils;
-
+import java.util.Objects;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Objects;
-
-import static com.miraway.mss.constants.Constants.STRING_MAX_LENGTH;
+import org.apache.commons.lang3.StringUtils;
 
 public class Permission {
 

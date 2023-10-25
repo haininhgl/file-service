@@ -1,15 +1,15 @@
 package com.miraway.mss.web.rest.request;
 
-import com.miraway.mss.modules.common.validator.DatabaseIdConstraint;
+import static com.miraway.mss.constants.Constants.STRING_MAX_LENGTH;
 
+import com.miraway.mss.modules.common.validator.DatabaseIdConstraint;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-
-import static com.miraway.mss.constants.Constants.STRING_MAX_LENGTH;
+import org.apache.commons.lang3.StringUtils;
 
 public class ObjectUsageRequest {
 
-    @NotBlank
+    @DatabaseIdConstraint
     private String objectId;
 
     @NotBlank
@@ -23,8 +23,7 @@ public class ObjectUsageRequest {
     @Size(max = STRING_MAX_LENGTH)
     private String clientName;
 
-    public ObjectUsageRequest() {
-    }
+    public ObjectUsageRequest() {}
 
     public ObjectUsageRequest(String objectId, String clientService, String clientId, String clientName) {
         this.objectId = objectId;
@@ -58,7 +57,7 @@ public class ObjectUsageRequest {
     }
 
     public String getClientName() {
-        return clientName;
+        return StringUtils.trim(clientName);
     }
 
     public void setClientName(String clientName) {

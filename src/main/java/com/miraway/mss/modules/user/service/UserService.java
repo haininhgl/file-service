@@ -6,6 +6,5 @@ import com.miraway.mss.modules.common.exception.ResourceNotFoundException;
 import com.miraway.mss.modules.user.dto.UserDTO;
 
 public interface UserService {
-
     UserDTO getCurrentLoginUser() throws ResourceNotFoundException, ForbiddenException, InternalServerException;
 }

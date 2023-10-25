@@ -1,9 +1,10 @@
 package com.miraway.mss.web.rest.request;
 
+import static com.miraway.mss.constants.Constants.STRING_MAX_LENGTH;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-
-import static com.miraway.mss.constants.Constants.STRING_MAX_LENGTH;
+import org.apache.commons.lang3.StringUtils;
 
 public class RenameObjectRequest {
 
@@ -11,15 +12,14 @@ public class RenameObjectRequest {
     @NotBlank
     private String displayName;
 
-    public RenameObjectRequest() {
-    }
+    public RenameObjectRequest() {}
 
     public RenameObjectRequest(String displayName) {
         this.displayName = displayName;
     }
 
     public String getDisplayName() {
-        return displayName;
+        return StringUtils.trim(displayName);
     }
 
     public void setDisplayName(String displayName) {

@@ -1,7 +1,6 @@
 package com.miraway.mss.modules.object.enumaration;
 
 public enum ObjectType {
-
     FILE("FILE"),
     FOLDER("FOLDER");
 

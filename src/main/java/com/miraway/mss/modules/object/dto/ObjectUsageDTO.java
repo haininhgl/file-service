@@ -16,11 +16,9 @@ public class ObjectUsageDTO {
 
     private String clientName;
 
-    public ObjectUsageDTO() {
-    }
+    public ObjectUsageDTO() {}
 
-    public ObjectUsageDTO(String id, Object object, boolean isDeletable,
-                          String clientService, String clientId, String clientName) {
+    public ObjectUsageDTO(String id, Object object, boolean isDeletable, String clientService, String clientId, String clientName) {
         this.id = id;
         this.object = object;
         this.isDeletable = isDeletable;

@@ -1,5 +1,7 @@
 package com.miraway.mss.modules.object.service;
 
+import static com.miraway.mss.constants.Constants.THUMBNAIL_PATH;
+
 import com.miraway.mss.modules.common.exception.BadRequestException;
 import com.miraway.mss.modules.common.exception.ForbiddenException;
 import com.miraway.mss.modules.common.exception.InternalServerException;
@@ -7,28 +9,21 @@ import com.miraway.mss.modules.common.exception.ResourceNotFoundException;
 import com.miraway.mss.modules.object.dto.filter.ObjectFilter;
 import com.miraway.mss.modules.object.entity.Object;
 import com.miraway.mss.modules.object.entity.ObjectUsage;
+import com.miraway.mss.modules.object.enumaration.ObjectType;
 import com.miraway.mss.modules.object.repository.ObjectRepository;
 import com.miraway.mss.modules.organization.dto.OrganizationDTO;
 import com.miraway.mss.modules.organization.service.OrganizationService;
 import com.miraway.mss.modules.user.dto.UserDTO;
 import com.miraway.mss.modules.user.service.UserService;
 import com.miraway.mss.web.rest.request.MoveFileRequest;
-import com.miraway.mss.web.rest.request.ObjectRequest;
-import com.miraway.mss.web.rest.request.RenameObjectRequest;
-import org.springframework.beans.BeanUtils;
+import java.io.File;
+import java.util.*;
+import java.util.stream.Collectors;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
-import static com.miraway.mss.constants.Constants.THUMBNAIL_PATH;
 
 @Service
 public class ObjectServiceImpl implements ObjectService {
@@ -41,7 +36,12 @@ public class ObjectServiceImpl implements ObjectService {
 
     private final OrganizationService organizationService;
 
-    public ObjectServiceImpl(ObjectRepository objectRepository, ObjectUsageService objectUsageService, UserService userService, OrganizationService organizationService) {
+    public ObjectServiceImpl(
+        ObjectRepository objectRepository,
+        ObjectUsageService objectUsageService,
+        UserService userService,
+        OrganizationService organizationService
+    ) {
         this.objectRepository = objectRepository;
         this.objectUsageService = objectUsageService;
         this.userService = userService;
@@ -49,7 +49,8 @@ public class ObjectServiceImpl implements ObjectService {
     }
 
     @Override
-    public Page<Object> getObjectList(ObjectFilter filter, Pageable pageable) throws ForbiddenException, InternalServerException, ResourceNotFoundException {
+    public Page<Object> getObjectList(ObjectFilter filter, Pageable pageable)
+        throws ForbiddenException, InternalServerException, ResourceNotFoundException {
         UserDTO currentUser = userService.getCurrentLoginUser();
         OrganizationDTO currentUserOrganization = currentUser.getOrganization();
         Set<String> filterOrganizationIds = filter.getOrganizationIds();
@@ -71,125 +72,114 @@ public class ObjectServiceImpl implements ObjectService {
     }
 
     @Override
-    public Object createFolder(ObjectRequest request) throws BadRequestException, ForbiddenException, InternalServerException, ResourceNotFoundException {
-        boolean folderExists = objectRepository.existsByDisplayNameAndParentId(
-            request.getDisplayName(), request.getParentId());
-
-        if (folderExists) {
-            throw new BadRequestException("Folder with the same displayName and parentId already exists.");
-        }
+    public Object createFolder(Object object)
+        throws BadRequestException, ForbiddenException, InternalServerException, ResourceNotFoundException {
+        validateObject(object);
 
         UserDTO currentUser = userService.getCurrentLoginUser();
         OrganizationDTO currentUserOrganization = currentUser.getOrganization();
-        String newOrganization = request.getOrganizationId();
+        String folderOrganizationId = object.getOrganizationId();
 
-        if (!currentUserOrganization.getId().equals(newOrganization)) {
-            throw new  ForbiddenException("User is not authorized to create folders");
+        Set<String> authorizedOrganizationIdList = organizationService.getChildrenIdsByIds(Set.of(currentUserOrganization.getId()));
+
+        if (!authorizedOrganizationIdList.contains(folderOrganizationId)) {
+            throw new ForbiddenException("Người dùng không có quyền tạo thư mục ");
         }
 
-        Object object = new Object();
-        BeanUtils.copyProperties(request, object);
         object.setName(UUID.randomUUID().toString().substring(0, 10));
         object.setThumbnailPath(THUMBNAIL_PATH);
         return objectRepository.save(object);
     }
 
+    @Override
     public Object getById(String id) throws ResourceNotFoundException {
         Object object = objectRepository.findById(id).orElse(null);
         if (object == null) {
-            throw new ResourceNotFoundException("Object not found!");
+            throw new ResourceNotFoundException("Không tìm thấy tài nguyên");
         }
 
         return object;
     }
 
-    private boolean isNameConflict(String displayName, String parentId) {
-        List<Object> objectsInSameFolder = objectRepository.findByParentId(parentId);
-
-        return objectsInSameFolder.stream()
-            .anyMatch(obj -> obj.getDisplayName().equals(displayName));
+    private boolean isObjectExisted(String displayName, String updatedParentId) {
+        return objectRepository.existsByDisplayNameIgnoreCaseAndParentId(displayName, updatedParentId);
     }
 
-    @Override
-    public Object updateById(String id, RenameObjectRequest request) throws BadRequestException, ResourceNotFoundException {
-        Object object = getById(id);
-        if (isNameConflict(request.getDisplayName(), object.getParentId())) {
+    private void validateObject(Object object) throws BadRequestException {
+        String parentId = object.getParentId();
+        boolean isUpdate = StringUtils.isNotBlank(parentId);
+        boolean isObjectExisted = isObjectExisted(object.getDisplayName(), isUpdate ? parentId : null);
+
+        if (isObjectExisted) {
             throw new BadRequestException("Tên mới trùng với một tên đã tồn tại trong thư mục.");
         }
-        BeanUtils.copyProperties(request, object);
-        objectRepository.save(object);
-
-        return object;
-    }
-
-    public String findNameById(String id) throws ResourceNotFoundException {
-        Object object = getById(id);
-        return object.getName();
-    }
-
-    public String getPathById(String id) throws ResourceNotFoundException {
-        Object object = getById(id);
-        return object.getPath();
     }
 
     @Override
-    public List<Object> updateFile(MoveFileRequest request) throws ResourceNotFoundException {
+    public Object updateById(String id, Object object) throws BadRequestException {
+        validateObject(object);
+        objectRepository.save(object);
+        return object;
+    }
 
-        Set<String> sourceObjects = request.getIdSources();
+    @Override
+    public List<Object> updateFile(MoveFileRequest request) throws ResourceNotFoundException, BadRequestException {
+        Set<String> sourceObjects = request.getSourceIds();
         Object targetObject = getById(request.getIdTarget());
-        List<Object> movedObjects = new ArrayList<>();
+
+        if (targetObject.getType() != ObjectType.FOLDER) {
+            throw new ResourceNotFoundException("Đối tượng di chuyển đến phải là thư mục");
+        }
+
+        List<Object> movedObjects = objectRepository.getByIdIn(sourceObjects);
+        if (CollectionUtils.isEmpty(movedObjects)) {
+            throw new BadRequestException("Không có đối tượng nào để di chuyển");
+        }
 
         for (String sourceObjectId : sourceObjects) {
             Object sourceObject = getById(sourceObjectId);
-
-            if (sourceObjectId == null || targetObject == null) {
-                throw new ResourceNotFoundException("Không tìm thấy tài nguyên");
-            } else {
-                String targetPath = getPathById(request.getIdTarget());
-                String name = findNameById(request.getIdSources().toString());
-                sourceObject.setPath(targetPath + File.separator + name);
-                objectRepository.save(sourceObject);
-                movedObjects.add(sourceObject);
-            }
+            movedObjects.add(sourceObject);
         }
 
+        for (Object sourceObject : movedObjects) {
+            String targetPath = targetObject.getPath();
+            String name = sourceObject.getName();
+            sourceObject.setPath(targetPath + File.separator + name);
+        }
+
+        objectRepository.saveAll(movedObjects);
         return movedObjects;
     }
 
     @Override
     public List<String> softDelete(Set<String> ids) throws ResourceNotFoundException, BadRequestException {
-        List<String> deletedObjectIds = new ArrayList<>();
-        for (String id : ids) {
-            Object object = getById(id);
-
-            if (object == null) {
-                throw new ResourceNotFoundException("Object with ID " + id + " does not exist or is in use.");
-            }
+        List<Object> objects = objectRepository.getByIdIn(ids);
+        if (objects.isEmpty()) {
+            throw new BadRequestException("Yêu cầu không hợp lệ.");
         }
 
-        List<ObjectUsage> objectUsages = objectUsageService.getByObjectId(ids);
-
-        List<ObjectUsage> deletable = objectUsages.stream()
-            .filter(ObjectUsage::isDeletable)
-            .collect(Collectors.toList());
+        List<ObjectUsage> deletable = objectUsageService.findByIdInAndIsDeleable(ids);
 
         if (deletable.isEmpty()) {
             throw new BadRequestException("Không có đối tượng nào để xóa");
         }
 
-        Set<String> objectIdDeletable = deletable.stream()
-            .map(objectUsage -> objectUsage.getObject().getId())
-            .collect(Collectors.toSet());
+        Set<String> objectIdDeletable = deletable.stream().map(objectUsage -> objectUsage.getObject().getId()).collect(Collectors.toSet());
 
-        objectRepository.updateIsDeleted(objectIdDeletable);
+        objectRepository.softDeleteObjects(objectIdDeletable);
 
         StringBuilder builder = new StringBuilder();
-        for (String id : ids) {
+        int count = 1;
+
+        for (String id : objectIdDeletable) {
             Object object = getById(id);
-            builder.append(object.getDisplayName()).append(", ");
+            if (count > 1) {
+                builder.append(", ");
+            }
+            builder.append(object.getDisplayName());
+            count++;
         }
 
-        deletedObjectIds.add(String.valueOf(builder));
-        return deletedObjectIds;
+        return Collections.singletonList(builder.toString());
     }
 }

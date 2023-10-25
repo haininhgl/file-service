@@ -1,36 +1,33 @@
 package com.miraway.mss.web.rest.request;
 
-
 import com.miraway.mss.modules.common.validator.DatabaseIdConstraint;
 import com.miraway.mss.modules.common.validator.DatabaseIdListConstraint;
-
-import javax.validation.constraints.NotBlank;
+import java.util.HashSet;
 import java.util.Set;
+import javax.validation.constraints.NotEmpty;
 
 public class MoveFileRequest {
 
-    @NotBlank
+    @NotEmpty
     @DatabaseIdListConstraint
-    private Set<String> idSources;
+    private Set<String> sourceIds = new HashSet<>();
 
-    @NotBlank
     @DatabaseIdConstraint
     private String idTarget;
 
-    public MoveFileRequest() {
-    }
+    public MoveFileRequest() {}
 
-    public MoveFileRequest(Set<String> idSources, String idTarget) {
-        this.idSources = idSources;
+    public MoveFileRequest(Set<String> sourceIds, String idTarget) {
+        this.sourceIds = sourceIds;
         this.idTarget = idTarget;
     }
 
-    public Set<String> getIdSources() {
-        return idSources;
+    public Set<String> getSourceIds() {
+        return sourceIds;
     }
 
-    public void setIdSources(Set<String> idSources) {
-        this.idSources = idSources;
+    public void setSourceIds(Set<String> sourceIds) {
+        this.sourceIds = sourceIds;
     }
 
     public String getIdTarget() {

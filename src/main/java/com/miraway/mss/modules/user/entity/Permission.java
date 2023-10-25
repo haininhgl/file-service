@@ -1,21 +1,19 @@
 package com.miraway.mss.modules.user.entity;
 
+import static com.miraway.mss.constants.Constants.STRING_MAX_LENGTH;
+
 import com.miraway.mss.modules.common.entity.AbstractAuditingEntity;
 import com.miraway.mss.modules.common.entity.MultiLanguage;
 import com.miraway.mss.security.MssGuard;
+import java.util.Objects;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.util.Objects;
-
-import static com.miraway.mss.constants.Constants.STRING_MAX_LENGTH;
-
-@Document(collection = "permissions")
 public class Permission extends AbstractAuditingEntity<String> {
 
     @Id

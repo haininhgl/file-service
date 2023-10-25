@@ -15,4 +15,3 @@ public interface UserRepository {
     @GetMapping(value = "/api/internal/users/getUserByLogin")
     APIResponse<UserDTO> getUserByLogin(@RequestParam @Size(max = STRING_MAX_LENGTH) String login) throws ResourceNotFoundException;
 }
-

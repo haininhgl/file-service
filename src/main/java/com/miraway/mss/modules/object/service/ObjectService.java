@@ -7,22 +7,22 @@ import com.miraway.mss.modules.common.exception.ResourceNotFoundException;
 import com.miraway.mss.modules.object.dto.filter.ObjectFilter;
 import com.miraway.mss.modules.object.entity.Object;
 import com.miraway.mss.web.rest.request.MoveFileRequest;
-import com.miraway.mss.web.rest.request.ObjectRequest;
-import com.miraway.mss.web.rest.request.RenameObjectRequest;
+import java.util.List;
+import java.util.Set;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
-import java.util.Set;
-
 public interface ObjectService {
-    Page<Object> getObjectList(ObjectFilter filter, Pageable pageable) throws ResourceNotFoundException, ForbiddenException, InternalServerException;
+    Page<Object> getObjectList(ObjectFilter filter, Pageable pageable)
+        throws ResourceNotFoundException, ForbiddenException, InternalServerException;
 
-    Object createFolder(ObjectRequest request) throws BadRequestException, ForbiddenException, InternalServerException, ResourceNotFoundException;
+    Object createFolder(Object object) throws BadRequestException, ForbiddenException, InternalServerException, ResourceNotFoundException;
 
-    Object updateById(String id, RenameObjectRequest request) throws ForbiddenException, ResourceNotFoundException, BadRequestException;
+    Object getById(String id) throws ResourceNotFoundException;
 
-    List<Object> updateFile(MoveFileRequest request) throws ResourceNotFoundException;
+    Object updateById(String id, Object object) throws ForbiddenException, ResourceNotFoundException, BadRequestException;
+
+    List<Object> updateFile(MoveFileRequest request) throws ResourceNotFoundException, BadRequestException;
 
     List<String> softDelete(Set<String> ids) throws ResourceNotFoundException, BadRequestException;
 }

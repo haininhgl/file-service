@@ -6,5 +6,4 @@ import com.miraway.mss.modules.object.entity.Object;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface ObjectMapper extends EntityMapper<ObjectDTO, Object> {
-}
+public interface ObjectMapper extends EntityMapper<ObjectDTO, Object> {}

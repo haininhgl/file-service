@@ -7,7 +7,6 @@ import com.miraway.mss.modules.organization.dto.OrganizationDTO;
 import java.util.Set;
 
 public interface OrganizationService {
-
     Set<String> getChildrenIdsByIds(Set<String> idList) throws InternalServerException;
 
     OrganizationDTO getOrganizationById(String id) throws ResourceNotFoundException, InternalServerException, ForbiddenException;

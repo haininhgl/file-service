@@ -4,6 +4,12 @@ import com.miraway.mss.kafka.messages.InitDataMessage;
 import com.miraway.mss.kafka.messages.Permission;
 import com.miraway.mss.kafka.producers.InitDataProducer;
 import com.miraway.mss.utils.DataUtils;
+import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
@@ -11,13 +17,6 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
-
-import java.io.File;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.util.Arrays;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Order(1)
 @Component
