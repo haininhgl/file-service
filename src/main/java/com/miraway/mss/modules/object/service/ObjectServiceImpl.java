@@ -136,11 +136,6 @@ public class ObjectServiceImpl implements ObjectService {
             throw new BadRequestException("Không có đối tượng nào để di chuyển");
         }
 
-        for (String sourceObjectId : sourceObjects) {
-            Object sourceObject = getById(sourceObjectId);
-            movedObjects.add(sourceObject);
-        }
-
         for (Object sourceObject : movedObjects) {
             String targetPath = targetObject.getPath();
             String name = sourceObject.getName();
@@ -158,7 +153,7 @@ public class ObjectServiceImpl implements ObjectService {
             throw new BadRequestException("Yêu cầu không hợp lệ.");
         }
 
-        List<ObjectUsage> deletable = objectUsageService.findByIdInAndIsDeleable(ids);
+        List<ObjectUsage> deletable = objectUsageService.findByIdInAndIsDeletable(ids);
 
         if (deletable.isEmpty()) {
             throw new BadRequestException("Không có đối tượng nào để xóa");
@@ -173,10 +168,12 @@ public class ObjectServiceImpl implements ObjectService {
 
         for (String id : objectIdDeletable) {
             Object object = getById(id);
-            if (count > 1) {
+            builder.append(object.getDisplayName());
+
+            if (count < objectIdDeletable.size()) {
                 builder.append(", ");
             }
-            builder.append(object.getDisplayName());
+
             count++;
         }
 

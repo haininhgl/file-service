@@ -11,11 +11,4 @@ public interface ObjectRepository extends MongoRepository<Object, String>, Custo
     boolean existsByDisplayNameIgnoreCaseAndParentId(String displayName, String updatedParentId);
 
     List<Object> getByIdIn(Set<String> ids);
-    //    @Query("{ 'displayName' : ?0 }")
-    //    boolean existsByDisplayName(String displayName);
-    //
-    //
-    //    @Query("{ 'displayName' : ?0 , 'parentId' : ?1 }")
-    //    boolean existsByDisplayNameAnAndParentId(String displayName, String parentId);
-
 }

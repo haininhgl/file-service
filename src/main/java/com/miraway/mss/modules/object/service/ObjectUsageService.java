@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface ObjectUsageService {
-    List<ObjectUsage> findByIdInAndIsDeleable(Set<String> ids);
+    List<ObjectUsage> findByIdInAndIsDeletable(Set<String> ids);
 
     ObjectUsage createObjectUsage(ObjectUsageRequest request) throws ResourceNotFoundException;
 }

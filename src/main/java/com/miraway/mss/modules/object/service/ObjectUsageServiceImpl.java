@@ -26,7 +26,7 @@ public class ObjectUsageServiceImpl implements ObjectUsageService {
     }
 
     @Override
-    public List<ObjectUsage> findByIdInAndIsDeleable(Set<String> ids) {
+    public List<ObjectUsage> findByIdInAndIsDeletable(Set<String> ids) {
         Set<ObjectId> objectIds = ids.stream().map(ObjectId::new).collect(Collectors.toSet());
         return objectUsageRepository.getByObjectId(objectIds);
     }

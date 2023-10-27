@@ -99,7 +99,7 @@ public class ObjectController {
     @DeleteMapping("/objects")
     public APIResponse<List<String>> deleteObjectById(@DatabaseIdListConstraint @RequestParam(value = "ids") Set<String> ids)
         throws ResourceNotFoundException, BadRequestException {
-        List<String> deletedObjectIds = objectService.softDelete(ids);
-        return APIResponse.newSuccessResponse(deletedObjectIds);
+        objectService.softDelete(ids);
+        return APIResponse.newSuccessResponse();
     }
 }
